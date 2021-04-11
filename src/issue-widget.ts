@@ -19,6 +19,8 @@ export default class IssueWidget {
   }
 
   setIssueIdentifier(redmineIssueKey: string): IssueWidget {
+    this.el.dataset.identifier = redmineIssueKey
+
     this.el.empty()
     this.el.innerHTML = 'loading..'
 
@@ -48,12 +50,12 @@ export default class IssueWidget {
     }
 
     this.el.createSpan({
-      text: `${this.issue.summary}`
+      text: `${this.issue.subject}`
     })
 
     const subheader = this.el.createDiv({ cls: ['redmine-issue-details'] })
     subheader.createSpan({
-      text: `${this.issue.key}`
+      text: `${this.issue.id}`
     })
     subheader.createSpan({
       text: `${this.issue.project.name}`
@@ -65,10 +67,9 @@ export default class IssueWidget {
 
   showTimeStats(): void {
     const container = this.el.createDiv({ cls: ['redmine-issue-time-bar-container'] })
-    const { originalEstimateSeconds, timeSpentSeconds } = this.issue.timeTracking
-    const percentage = originalEstimateSeconds / (100 * timeSpentSeconds)
+    const { doneRatio } = this.issue.timeTracking
 
     const bar = container.createDiv({ cls: ['redmine-issue-time-bar'] })
-    bar.style.width = Math.ceil(percentage) + '%'
+    bar.style.width = Math.ceil(doneRatio) + '%'
   }
 }

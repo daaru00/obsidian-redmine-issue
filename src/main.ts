@@ -36,6 +36,7 @@ export default class RedmineIssuePlugin extends Plugin {
 			
 			const issueWidget = issueWidgetContainer.createDiv()
 			issueWidget.addClass('redmine-issue')
+			issueWidget.addClass('timer-tracker-compatible')
 
 			new IssueWidget(this, issueWidget)
 				.setIssueIdentifier(key)

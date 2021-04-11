@@ -5,26 +5,20 @@ import { join } from 'path'
 
 export interface RedmineIssue {
   id: string;
-  key: string;
   project: RedmineProject,
-  summary: string;
+  subject: string;
   status: string;
-  timeTracking: RedmineIssueTracking;
+  timeTracking: RedmineIssueTracking
 }
 
 export interface RedmineProject {
   id: string;
-  key: string;
   name: string;
 }
 
 export interface RedmineIssueTracking {
-  originalEstimate: string;
-  originalEstimateSeconds: number;
-  remainingEstimate: string;
-  remainingEstimateSeconds: number;
-  timeSpent: string;
-  timeSpentSeconds: number;
+  spentHours: number;
+  doneRatio: number;
 }
 
 export interface RedmineWorkLog {
@@ -47,12 +41,12 @@ export default class RedmineClient {
     const options = {
       hostname: this.settings.host,
       port: 443,
-      path,
+      path: join('/', path),
       method: method,
       headers: {
         'X-Redmine-API-Key': this.settings.token
       }
-    };    
+    }
 
     return new Promise((resolve, reject) => {
       let resData = ''
@@ -88,19 +82,20 @@ export default class RedmineClient {
   }
 
   async getIssueDetails(issueId: string): Promise<RedmineIssue> {
-    const res = await this.callApi('GET', join('issues.json')+'?issue_id='+issueId)
+    const res = await this.callApi('GET', join('issues', issueId + '.json'))
     
     return {
-      id: res.id,
-      key: '',
+      id: res.issue.id,
       project: {
-        id: res.project_id,
-        key: '',
-        name: ''
+        id: res.issue.project.id,
+        name: res.issue.project.name
       },
-      summary: '',
-      status: '',
-      timeTracking: null
+      subject: res.issue.subject,
+      status: res.issue.name,
+      timeTracking: {
+        doneRatio: res.issue.done_ratio,
+        spentHours: res.issue.spent_hours,
+      }
     }
   }
 
