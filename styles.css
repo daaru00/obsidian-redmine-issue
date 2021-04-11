@@ -1,0 +1,32 @@
+.redmine-issues-grid {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.redmine-issue-grid-item {
+    flex-grow: 1;
+    padding: 1em;
+    max-width: 300px;
+    min-width: 300px;
+}
+
+.redmine-issue {
+    color: var(--text-normal);
+    background-color: var(--background-primary-alt);
+    border-radius: 5px;
+    padding: 0.4em;
+    height: 100%;
+}
+.redmine-issue.in-error {
+    color: var(--text-error);
+    text-align: center;
+    padding: 1em;
+}
+
+.redmine-issue-details span {
+    font-size: 0.6em;
+}
+
+.redmine-issue-details span:not(:last-child) {
+    margin-right: 5px;
+}
