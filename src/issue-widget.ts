@@ -1,5 +1,6 @@
 import RedmineIssuePlugin from './main'
 import {RedmineIssue} from './lib/redmine'
+import * as path from 'path'
 
 export default class IssueWidget {
   el: HTMLElement;
@@ -62,6 +63,14 @@ export default class IssueWidget {
     })
     subheader.createSpan({
       text: `${this.issue.status}`
+    })
+    subheader.createEl('a', {
+      attr: {
+        rel: 'noopener',
+        target: '_blank',
+        href: path.join('https://'+this.plugin.settings.host, 'issues', this.issue.id.toString()),
+      },
+      cls: ['external-link']
     })
   }
 
