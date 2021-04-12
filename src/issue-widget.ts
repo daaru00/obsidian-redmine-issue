@@ -50,8 +50,9 @@ export default class IssueWidget {
       return
     }
 
-    this.el.createSpan({
-      text: `${this.issue.subject}`
+    this.el.createDiv({
+      text: `${this.issue.subject}`,
+      cls: ['redmine-issue-title']
     })
 
     const subheader = this.el.createDiv({ cls: ['redmine-issue-details'] })
@@ -61,9 +62,11 @@ export default class IssueWidget {
     subheader.createSpan({
       text: `${this.issue.project.name}`
     })
-    subheader.createSpan({
-      text: `${this.issue.status}`
-    })
+    if (this.issue.status) {
+      subheader.createSpan({
+        text: `${this.issue.status}`
+      })
+    }
     subheader.createEl('a', {
       attr: {
         rel: 'noopener',

@@ -14,12 +14,18 @@
     color: var(--text-normal);
     background-color: var(--background-primary-alt);
     border-radius: 5px;
-    padding: 0.4em;
+    padding: 5px 10px 10px 10px;
 }
+
 .redmine-issue.in-error {
     color: var(--text-error);
     text-align: center;
     padding: 1em;
+}
+
+.redmine-issue-title {
+    height: 3em;
+    overflow: hidden;
 }
 
 .redmine-issue-details span {
@@ -39,5 +45,6 @@
 
 .redmine-issue-time-bar {
     height: 100%;
+    width: 0;
     background-color: var(--text-accent-hover);
 }
