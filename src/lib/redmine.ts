@@ -19,6 +19,7 @@ export interface RedmineProject {
 export interface RedmineIssueTracking {
   spentHours: number;
   doneRatio: number;
+  estimatedHours: number;
 }
 
 export interface RedmineWorkLog {
@@ -83,7 +84,8 @@ export default class RedmineClient {
 
   async getIssueDetails(issueId: string): Promise<RedmineIssue> {
     const res = await this.callApi('GET', join('issues', issueId + '.json'))
-    
+    res.issue = res.issue || {}
+
     return {
       id: res.issue.id,
       project: {
@@ -93,8 +95,9 @@ export default class RedmineClient {
       subject: res.issue.subject,
       status: res.issue.name,
       timeTracking: {
-        doneRatio: res.issue.done_ratio,
-        spentHours: res.issue.spent_hours,
+        doneRatio: res.issue.done_ratio || 0,
+        spentHours: res.issue.spent_hours || 0,
+        estimatedHours: res.issue.estimated_hours || 0
       }
     }
   }

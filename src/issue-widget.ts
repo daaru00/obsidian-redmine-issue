@@ -13,6 +13,7 @@ export default class IssueWidget {
   constructor(plugin: RedmineIssuePlugin, el: HTMLElement) {
     this.plugin = plugin
     this.el = el
+    this.el.addEventListener('refresh', this.loadIssue.bind(this))
   }
 
   getIssueIdentifier(): string {
@@ -79,9 +80,21 @@ export default class IssueWidget {
 
   showTimeStats(): void {
     const container = this.el.createDiv({ cls: ['redmine-issue-time-bar-container'] })
-    const { doneRatio } = this.issue.timeTracking
+    const timeBar = container.createDiv({ cls: ['redmine-issue-time-bar'] })
 
-    const bar = container.createDiv({ cls: ['redmine-issue-time-bar'] })
-    bar.style.width = Math.ceil(doneRatio) + '%'
+    const { doneRatio, estimatedHours, spentHours } = this.issue.timeTracking
+    if (estimatedHours && estimatedHours > 0) {
+      const percentage = Math.ceil(spentHours / estimatedHours * 100)
+      if (percentage <= 100) {
+        timeBar.style.width = percentage + '%'
+      } else {
+        timeBar.style.width = '100%'
+
+        const timeBarOverflow = timeBar.createDiv({ cls: ['redmine-issue-time-bar-overflow'] })
+        timeBarOverflow.style.width = (percentage - 100) + '%'
+      }
+    } else {
+      timeBar.style.width = Math.ceil(doneRatio) + '%'
+    }
   }
 }

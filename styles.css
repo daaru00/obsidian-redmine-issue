@@ -43,8 +43,15 @@
     margin-top: 0.2em;
 }
 
-.redmine-issue-time-bar {
+.redmine-issue-time-bar, .redmine-issue-time-bar-overflow {
     height: 100%;
     width: 0;
+}
+
+.redmine-issue-time-bar {
     background-color: var(--text-accent-hover);
+}
+
+.redmine-issue-time-bar-overflow {
+    background-color: var(--text-error-hover);
 }

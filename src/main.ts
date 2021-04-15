@@ -23,6 +23,15 @@ export default class RedmineIssuePlugin extends Plugin {
 		this.registerMarkdownCodeBlockProcessor('redmine', this.issueBlockProcessor.bind(this))
 
 		this.initRedmineClient()
+
+		this.addCommand({
+			id: 'app:refresh-redmine-issues',
+			name: 'Refresh Redmine issues',
+			callback: () => {
+				document.querySelectorAll('.redmine-issue').forEach(issue => issue.dispatchEvent(new CustomEvent('refresh')))
+			},
+			hotkeys: []
+		})
 	}
 
 	initRedmineClient(): void {
