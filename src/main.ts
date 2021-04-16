@@ -4,12 +4,8 @@ import RedmineClient from './lib/redmine'
 import RedmineIssuePluginSettings, { DEFAULT_SETTINGS } from './settings'
 import RedmineIssueSettingTab from './settings-tab'
 import IssueWidget from './issue-widget'
-
-interface OnTimerSaveEvent {
-	detail: {
-		id: string
-	}
-}
+import TrackingSaveModal from './tracking-save-modal'
+import { OnTimerSaveEvent } from './types'
 
 export default class RedmineIssuePlugin extends Plugin {
 	settings: RedmineIssuePluginSettings
@@ -61,6 +57,10 @@ export default class RedmineIssuePlugin extends Plugin {
 	}
 
 	async onSaveTimer(event: OnTimerSaveEvent): Promise<void> {
+		new TrackingSaveModal(this, event).open()
+	}
+
+	onTimerSaved(event: OnTimerSaveEvent): void {
 		const timerElement = window.document.querySelector('.timer-control-container[data-identifier="'+event.detail.id+'"]')
 		if (!timerElement) {
 			return

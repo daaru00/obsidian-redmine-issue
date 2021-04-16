@@ -1,6 +1,7 @@
 .redmine-issues-grid {
     display: flex;
     flex-wrap: wrap;
+    margin: 0 -1em;
 }
 
 .redmine-issue-grid-item {
@@ -54,4 +55,15 @@
 
 .redmine-issue-time-bar-overflow {
     background-color: var(--text-error-hover);
+}
+
+.redmine-modal-commands button {
+    float: right;
+}
+
+.redmine-modal-title {
+    max-width: 20em;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
