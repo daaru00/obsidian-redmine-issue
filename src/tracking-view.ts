@@ -22,7 +22,7 @@ export default class TimerView extends ItemView {
 	}
 
 	getDisplayText(): string {
-		return 'Tracked Time Stats';
+		return 'Redmine Tracking Stats';
 	}
 
 	getIcon(): string {

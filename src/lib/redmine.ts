@@ -82,7 +82,7 @@ export default class RedmineClient {
           resData = resData.trim()
 
           if (res.statusCode < 200 || res.statusCode > 299) {
-            return reject(resData ? JSON.parse(resData) : res.statusCode)
+            return reject(resData || `Status code ${res.statusCode}`)
           }
 
           resolve(resData ? JSON.parse(resData) : '')

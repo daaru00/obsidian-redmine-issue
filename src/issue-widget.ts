@@ -36,7 +36,7 @@ export default class IssueWidget {
     try {
       this.issue = await this.plugin.redmineClient.getIssueDetails(this.redmineIssueKey)
     } catch (error) {
-      this.el.innerHTML = error.errorMessages ? error.errorMessages.join(' ') : error 
+      this.el.innerHTML = error.toString()
       this.el.addClass('in-error')
       return
     }
