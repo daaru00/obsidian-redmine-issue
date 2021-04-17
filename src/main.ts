@@ -108,6 +108,7 @@ export default class RedmineIssuePlugin extends Plugin {
 		}
 
 		timerElement.dispatchEvent(new CustomEvent('timersaved', event))
+		this.refreshData()
 	}
 
 	async loadSettings(): Promise<void> {
