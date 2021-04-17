@@ -51,7 +51,7 @@ export default class TimerView extends ItemView {
 
 		this.svgText = window.document.createElementNS(XMLNS, "text")
 		this.svgText.setAttributeNS(null,"x",'50')
-    this.svgText.setAttributeNS(null,"y",'53')
+    this.svgText.setAttributeNS(null,"y",'54')
 		this.svgText.setAttributeNS(null,"fill",'currentColor')
 		this.svgText.setAttributeNS(null,"text-anchor",'middle')
 
@@ -102,11 +102,18 @@ export default class TimerView extends ItemView {
 	}
 
   async refreshStats(): Promise<void> {
-    const entries = await this.plugin.redmineClient.getTimeEntriesByDate(this.dateFilter)
+		let entries = []
+		try {
+			entries = await this.plugin.redmineClient.getTimeEntriesByDate(this.dateFilter)	
+		} catch (error) {
+			this.setCirclePercentage(0)
+			this.setLabelText('-')
+			return
+		}
+    
 		const total = entries.reduce((total, entry) => total + entry.hours, 0)
-
 		let percent = 0
-		if (total !== 0) {
+		if (total !== 0 && this.plugin.settings.dayHours) {
 			percent = Math.ceil(total / this.plugin.settings.dayHours * 100)
 		}
 

@@ -31,6 +31,15 @@ export interface RedmineTimeEntry {
   comments: string;
 }
 
+export interface RedmineUser {
+  id: string;
+  name: string;
+  firstName: string;
+  lastName: string;
+  login: string;
+  mail: string;
+}
+
 export interface RedmineTimeEntryActivity {
   id: string;
   name: string;
@@ -90,6 +99,20 @@ export default class RedmineClient {
 
       req.end()
     })    
+  }
+
+  async getUser(): Promise<RedmineUser> {
+    const res = await this.callApi('GET', join('users', 'current.json'))
+    res.user = res.user || {}
+
+    return {
+      id: res.user.id,
+      name: res.user.login,
+      firstName: res.user.firstname,
+      lastName: res.user.lastname,
+      login: res.user.login,
+      mail: res.user.login
+    }
   }
 
   async getIssueDetails(issueId: string): Promise<RedmineIssue> {

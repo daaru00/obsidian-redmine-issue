@@ -1,4 +1,4 @@
-import { App, PluginSettingTab, Setting } from 'obsidian'
+import { App, Notice, PluginSettingTab, Setting } from 'obsidian'
 import RedmineIssuePlugin from './main'
 
 export default class RedmineIssueSettingTab extends PluginSettingTab {
@@ -37,6 +37,25 @@ export default class RedmineIssueSettingTab extends PluginSettingTab {
 						await this.plugin.saveSettings();
 					})
 			})
+
+		new Setting(containerEl)
+			.setName('Test Credentials')
+			.setDesc('Retrieve current logged user')
+			.addButton(button => button
+				.setButtonText("test")
+				.onClick(() => {
+					button.setDisabled(true)
+					this.plugin.redmineClient.getUser()
+					.then(user => {
+						new Notice(`Successfully logged in as ${user.login}`)
+					})
+					.catch(error => {
+						new Notice(`Error: ${error}`)
+					})
+					.finally(() => {
+						button.setDisabled(false)
+					})
+				}))
 
 		new Setting(containerEl)
 			.setName('Working Day Hours')
