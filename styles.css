@@ -57,8 +57,9 @@
     background-color: var(--text-error-hover);
 }
 
-.redmine-modal-commands button {
-    float: right;
+.redmine-modal-commands {
+    text-align: right;
+    padding-top: 2em;
 }
 
 .redmine-modal-title {

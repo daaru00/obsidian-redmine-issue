@@ -15,7 +15,7 @@ export default class RedmineIssueSettingTab extends PluginSettingTab {
 		containerEl.empty();
 
 		new Setting(containerEl)
-			.setName('Redmine Host')
+			.setName('Redmine host')
 			.setDesc('The domain host of Redmine instance')
 			.addText(text => text
 				.setValue(this.plugin.settings.host)
@@ -26,7 +26,7 @@ export default class RedmineIssueSettingTab extends PluginSettingTab {
 				}));
 		
 		new Setting(containerEl)
-			.setName('API Access Key')
+			.setName('API access key')
 			.setDesc('The API token from account page')
 			.addText(text => {
 				text.inputEl.type = 'password'
@@ -39,7 +39,7 @@ export default class RedmineIssueSettingTab extends PluginSettingTab {
 			})
 
 		new Setting(containerEl)
-			.setName('Test Credentials')
+			.setName('Test credentials')
 			.setDesc('Retrieve current logged user')
 			.addButton(button => button
 				.setButtonText("test")
@@ -58,7 +58,7 @@ export default class RedmineIssueSettingTab extends PluginSettingTab {
 				}))
 
 		new Setting(containerEl)
-			.setName('Working Day Hours')
+			.setName('Working day hours')
 			.setDesc('the number of hours to track in a working day')
 			.addText(text => text
 				.setValue(this.plugin.settings.dayHours.toString())
