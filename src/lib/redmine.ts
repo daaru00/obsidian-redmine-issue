@@ -22,13 +22,13 @@ export interface RedmineIssueTracking {
   estimatedHours: number;
 }
 
-export interface RedmineWorkLog {
+export interface RedmineTimeEntry {
   id: string;
-  timeSpent: string;
-  timeSpentSeconds: number;
-  isOwner: boolean;
-  startedAt: Date|null;
-  updatedAt: Date|null;
+  issueId: number;
+  hours: number;
+  activity: number;
+  spentOn: Date;
+  comments: string;
 }
 
 export interface RedmineTimeEntryActivity {
@@ -136,7 +136,7 @@ export default class RedmineClient {
     }))
   }
   
-  async saveIssueTracking(issueId: string, hours: number, activityId: number, spentOn?: Date, comments?: string): Promise<void> {
+  async saveIssueTimeEntry(issueId: string, hours: number, activityId: number, spentOn?: Date, comments?: string): Promise<void> {
     await this.callApi('POST', 'time_entries.json', {
       time_entry: {
         issue_id: issueId,
@@ -148,10 +148,20 @@ export default class RedmineClient {
     })
   }
 
-  async getIssueWorkLogs(issueId: string): Promise<RedmineWorkLog[]> {
-    const res = await this.callApi('GET', join('issue', issueId, 'worklog'))
-    res.worklogs = res.worklogs || []
+  async getTimeEntriesByDate(date?: Date): Promise<RedmineTimeEntry[]> {
+    date = date || (new Date())
+    const dateFilter = date.toISOString().slice(0, 10)
 
-    return res.worklogs
+    const res = await this.callApi('GET', `time_entries.json?user_id=me&from=${dateFilter}&to=${dateFilter}`)
+    res.time_entries = res.time_entries || []
+
+    return res.time_entries.map((entry: { id: number, issue: { id: number }, activity: { id: number }, hours: number, spent_on: string, comments: string }) => ({
+      id: entry.id,
+      issueId: entry.issue.id,
+      hours: entry.hours,
+      activity: entry.activity.id,
+      spentOn: new Date(entry.spent_on),
+      comments: entry.comments,
+    }))
   }
 }

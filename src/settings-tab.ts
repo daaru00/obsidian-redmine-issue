@@ -19,7 +19,7 @@ export default class RedmineIssueSettingTab extends PluginSettingTab {
 			.setDesc('The domain host of Redmine instance')
 			.addText(text => text
 				.setValue(this.plugin.settings.host)
-				.setPlaceholder("my-host.atlassian.net")
+				.setPlaceholder("my-host-name.com")
 				.onChange(async (value) => {
 					this.plugin.settings.host = value;
 					await this.plugin.saveSettings();
@@ -37,5 +37,15 @@ export default class RedmineIssueSettingTab extends PluginSettingTab {
 						await this.plugin.saveSettings();
 					})
 			})
+
+		new Setting(containerEl)
+			.setName('Working Day Hours')
+			.setDesc('the number of hours to track in a working day')
+			.addText(text => text
+				.setValue(this.plugin.settings.dayHours.toString())
+				.onChange(async (value) => {
+					this.plugin.settings.dayHours = parseInt(value);
+					await this.plugin.saveSettings();
+				}));
 	}
 }

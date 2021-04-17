@@ -99,7 +99,7 @@ export default class TrackingSaveModal extends Modal {
   }
 
   async save(duration: string, activityId: number, comment: string): Promise<void> {
-    await this.plugin.redmineClient.saveIssueTracking(this.event.detail.id, parseFloat(duration), activityId, this.event.detail.startedAt, comment)
+    await this.plugin.redmineClient.saveIssueTimeEntry(this.event.detail.id, parseFloat(duration), activityId, this.event.detail.startedAt, comment)
     this.plugin.onTimerSaved(this.event)
   }
 }
