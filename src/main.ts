@@ -1,5 +1,6 @@
 import * as os from 'os'
 import { Plugin, WorkspaceLeaf } from 'obsidian'
+import "./lib/icons"
 import RedmineClient from './lib/redmine'
 import RedmineIssuePluginSettings, { DEFAULT_SETTINGS } from './settings'
 import RedmineIssueSettingTab from './settings-tab'

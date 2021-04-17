@@ -26,7 +26,7 @@ export default class TimerView extends ItemView {
 	}
 
 	getIcon(): string {
-		return "clock";
+		return "graph-circle";
 	}
 
 	async onOpen(): Promise<void> {
@@ -113,6 +113,8 @@ export default class TimerView extends ItemView {
 	}
 
   async refreshStats(): Promise<void> {
+		this.setLabelText('...')
+
 		let entries = []
 		try {
 			entries = await this.plugin.redmineClient.getTimeEntriesByDate(this.dateFilter)	
