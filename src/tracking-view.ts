@@ -40,6 +40,16 @@ export default class TimerView extends ItemView {
 		svg.setAttributeNS(null, "height", "100")
 		svg.setAttributeNS(null, "viewBox", "0 0 100 100")
 
+    const svgCircleBg = window.document.createElementNS(XMLNS, "circle")
+    svgCircleBg.setAttributeNS(null,"id",'circle-bg')
+    svgCircleBg.setAttributeNS(null,"cx",'50')
+    svgCircleBg.setAttributeNS(null,"cy",'50')
+    svgCircleBg.setAttributeNS(null,"r",'35')
+    svgCircleBg.setAttributeNS(null,"stroke-width",'4')
+    svgCircleBg.setAttributeNS(null,"stroke-linecap",'round')
+    svgCircleBg.setAttributeNS(null,"fill",'transparent')
+    svgCircleBg.setAttributeNS(null,"stroke",'transparent')
+
     this.svgCircle = window.document.createElementNS(XMLNS, "circle")
     this.svgCircle.setAttributeNS(null,"cx",'50')
     this.svgCircle.setAttributeNS(null,"cy",'50')
@@ -55,6 +65,7 @@ export default class TimerView extends ItemView {
 		this.svgText.setAttributeNS(null,"fill",'currentColor')
 		this.svgText.setAttributeNS(null,"text-anchor",'middle')
 
+		svg.appendChild(svgCircleBg)
 		svg.appendChild(this.svgCircle)
 		svg.appendChild(this.svgText)
 		svg.addClass('redmine-tracking-stats')
@@ -118,7 +129,7 @@ export default class TimerView extends ItemView {
 		}
 
 		this.setCirclePercentage(percent > 100 ? 100 : percent)
-		this.setLabelText(`${percent}%`)
+		this.setLabelText(`${total}h`)
   }
 
 	setCirclePercentage(percent: number): void {
