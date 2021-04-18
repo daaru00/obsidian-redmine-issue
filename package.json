@@ -1,6 +1,6 @@
 {
     "name": "obsidian-redmine-issue",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "description": "Obsidian Plugin for Redmine issue details",
     "main": "main.js",
     "scripts": {
