@@ -1,14 +1,14 @@
-import { ButtonComponent, Modal, Setting } from "obsidian"
-import { RedmineIssue, RedmineTimeEntryActivity } from "./lib/redmine";
-import RedmineIssuePlugin from "./main"
-import { OnTimerSaveEvent } from "./types";
+import { ButtonComponent, Modal, Setting } from 'obsidian'
+import { RedmineIssue, RedmineTimeEntryActivity } from './lib/redmine'
+import RedmineIssuePlugin from './main'
+import { OnTimerSaveEvent } from './types'
 
 export default class TrackingSaveModal extends Modal {
   plugin: RedmineIssuePlugin
   event: OnTimerSaveEvent;
 
 	constructor(plugin: RedmineIssuePlugin, event: OnTimerSaveEvent) {
-		super(plugin.app);
+		super(plugin.app)
     this.plugin = plugin
     this.event = event
 	}
@@ -75,7 +75,7 @@ export default class TrackingSaveModal extends Modal {
     const commandContainer = this.contentEl.createDiv({ cls: ['redmine-modal-commands'] })
 
     const btnSave = new ButtonComponent(commandContainer)
-      .setButtonText("save")
+      .setButtonText('save')
       .onClick(() => {
         if (parseFloat(duration) <= 0) {
           return

@@ -1,6 +1,6 @@
 import * as os from 'os'
 import { Plugin, WorkspaceLeaf } from 'obsidian'
-import "./lib/icons"
+import './lib/icons'
 import RedmineClient from './lib/redmine'
 import RedmineIssuePluginSettings, { DEFAULT_SETTINGS } from './settings'
 import RedmineIssueSettingTab from './settings-tab'
@@ -73,7 +73,7 @@ export default class RedmineIssuePlugin extends Plugin {
 		leaf.setViewState({
 			type: VIEW_TYPE_OUTPUT,
 			active: true
-		});
+		})
 	}
 
 	async issueBlockProcessor(content: string, el: HTMLElement): Promise<void> {

@@ -75,7 +75,7 @@ export default class RedmineClient {
         })
 
         res.on('error', (error) => {
-          reject(error);
+          reject(error)
         })
 
         res.on('end', () => {
@@ -90,7 +90,7 @@ export default class RedmineClient {
       })
       
       req.on('error', (error) => {
-        reject(error);
+        reject(error)
       })
 
       if (['POST', 'PUT'].includes(method.toLocaleUpperCase()) && data) {

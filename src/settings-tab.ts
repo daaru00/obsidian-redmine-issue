@@ -5,25 +5,25 @@ export default class RedmineIssueSettingTab extends PluginSettingTab {
 	plugin: RedmineIssuePlugin;
 
 	constructor(app: App, plugin: RedmineIssuePlugin) {
-		super(app, plugin);
-		this.plugin = plugin;
+		super(app, plugin)
+		this.plugin = plugin
 	}
 
 	async display(): Promise<void> {
-		const {containerEl} = this;
+		const {containerEl} = this
 
-		containerEl.empty();
+		containerEl.empty()
 
 		new Setting(containerEl)
 			.setName('Redmine host')
 			.setDesc('The domain host of Redmine instance')
 			.addText(text => text
 				.setValue(this.plugin.settings.host)
-				.setPlaceholder("my-host-name.com")
+				.setPlaceholder('my-host-name.com')
 				.onChange(async (value) => {
-					this.plugin.settings.host = value;
-					await this.plugin.saveSettings();
-				}));
+					this.plugin.settings.host = value
+					await this.plugin.saveSettings()
+				}))
 		
 		new Setting(containerEl)
 			.setName('API access key')
@@ -31,10 +31,10 @@ export default class RedmineIssueSettingTab extends PluginSettingTab {
 			.addText(text => {
 				text.inputEl.type = 'password'
 				text.setValue(this.plugin.settings.token)
-					.setPlaceholder("xxxxxxxxxxxxxxxxxxxxx")
+					.setPlaceholder('xxxxxxxxxxxxxxxxxxxxx')
 					.onChange(async (value) => {
-						this.plugin.settings.token = value;
-						await this.plugin.saveSettings();
+						this.plugin.settings.token = value
+						await this.plugin.saveSettings()
 					})
 			})
 
@@ -42,7 +42,7 @@ export default class RedmineIssueSettingTab extends PluginSettingTab {
 			.setName('Test credentials')
 			.setDesc('Retrieve current logged user')
 			.addButton(button => button
-				.setButtonText("test")
+				.setButtonText('test')
 				.onClick(() => {
 					button.setDisabled(true)
 					this.plugin.redmineClient.getUser()
@@ -63,8 +63,8 @@ export default class RedmineIssueSettingTab extends PluginSettingTab {
 			.addText(text => text
 				.setValue(this.plugin.settings.dayHours.toString())
 				.onChange(async (value) => {
-					this.plugin.settings.dayHours = parseInt(value);
-					await this.plugin.saveSettings();
-				}));
+					this.plugin.settings.dayHours = parseInt(value)
+					await this.plugin.saveSettings()
+				}))
 	}
 }

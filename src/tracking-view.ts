@@ -1,8 +1,8 @@
-import RedminePlugin from './main';
-import { ButtonComponent, ItemView, WorkspaceLeaf } from "obsidian";
+import RedminePlugin from './main'
+import { ButtonComponent, ItemView, WorkspaceLeaf } from 'obsidian'
 
 export const VIEW_TYPE_OUTPUT = 'redmine-tracking'
-const XMLNS = "http://www.w3.org/2000/svg"
+const XMLNS = 'http://www.w3.org/2000/svg'
 
 export default class TimerView extends ItemView {
 	plugin: RedminePlugin
@@ -12,58 +12,58 @@ export default class TimerView extends ItemView {
 	svgText: SVGTextElement;
 
 	constructor(leaf: WorkspaceLeaf, plugin: RedminePlugin) {
-		super(leaf);
+		super(leaf)
 		this.plugin = plugin
 		this.dateFilter = new Date()
 	}
 
 	getViewType(): string {
-		return VIEW_TYPE_OUTPUT;
+		return VIEW_TYPE_OUTPUT
 	}
 
 	getDisplayText(): string {
-		return 'Redmine Tracking Stats';
+		return 'Redmine Tracking Stats'
 	}
 
 	getIcon(): string {
-		return "graph-circle";
+		return 'graph-circle'
 	}
 
 	async onOpen(): Promise<void> {
-		const { containerEl } = this;
+		const { containerEl } = this
 		containerEl.empty()
 
 		this.showDateFilter()
 
-		const svg = window.document.createElementNS(XMLNS, "svg")
-		svg.setAttributeNS(null, "width", "100")
-		svg.setAttributeNS(null, "height", "100")
-		svg.setAttributeNS(null, "viewBox", "0 0 100 100")
+		const svg = window.document.createElementNS(XMLNS, 'svg')
+		svg.setAttributeNS(null, 'width', '100')
+		svg.setAttributeNS(null, 'height', '100')
+		svg.setAttributeNS(null, 'viewBox', '0 0 100 100')
 
-    const svgCircleBg = window.document.createElementNS(XMLNS, "circle")
-    svgCircleBg.setAttributeNS(null,"id",'circle-bg')
-    svgCircleBg.setAttributeNS(null,"cx",'50')
-    svgCircleBg.setAttributeNS(null,"cy",'50')
-    svgCircleBg.setAttributeNS(null,"r",'35')
-    svgCircleBg.setAttributeNS(null,"stroke-width",'4')
-    svgCircleBg.setAttributeNS(null,"stroke-linecap",'round')
-    svgCircleBg.setAttributeNS(null,"fill",'transparent')
-    svgCircleBg.setAttributeNS(null,"stroke",'transparent')
+    const svgCircleBg = window.document.createElementNS(XMLNS, 'circle')
+    svgCircleBg.setAttributeNS(null,'id','circle-bg')
+    svgCircleBg.setAttributeNS(null,'cx','50')
+    svgCircleBg.setAttributeNS(null,'cy','50')
+    svgCircleBg.setAttributeNS(null,'r','35')
+    svgCircleBg.setAttributeNS(null,'stroke-width','4')
+    svgCircleBg.setAttributeNS(null,'stroke-linecap','round')
+    svgCircleBg.setAttributeNS(null,'fill','transparent')
+    svgCircleBg.setAttributeNS(null,'stroke','transparent')
 
-    this.svgCircle = window.document.createElementNS(XMLNS, "circle")
-    this.svgCircle.setAttributeNS(null,"cx",'50')
-    this.svgCircle.setAttributeNS(null,"cy",'50')
-    this.svgCircle.setAttributeNS(null,"r",'35')
-    this.svgCircle.setAttributeNS(null,"stroke-width",'4')
-    this.svgCircle.setAttributeNS(null,"stroke-linecap",'round')
-    this.svgCircle.setAttributeNS(null,"fill",'transparent')
-    this.svgCircle.setAttributeNS(null,"stroke",'currentColor')
+    this.svgCircle = window.document.createElementNS(XMLNS, 'circle')
+    this.svgCircle.setAttributeNS(null,'cx','50')
+    this.svgCircle.setAttributeNS(null,'cy','50')
+    this.svgCircle.setAttributeNS(null,'r','35')
+    this.svgCircle.setAttributeNS(null,'stroke-width','4')
+    this.svgCircle.setAttributeNS(null,'stroke-linecap','round')
+    this.svgCircle.setAttributeNS(null,'fill','transparent')
+    this.svgCircle.setAttributeNS(null,'stroke','currentColor')
 
-		this.svgText = window.document.createElementNS(XMLNS, "text")
-		this.svgText.setAttributeNS(null,"x",'50')
-    this.svgText.setAttributeNS(null,"y",'54')
-		this.svgText.setAttributeNS(null,"fill",'currentColor')
-		this.svgText.setAttributeNS(null,"text-anchor",'middle')
+		this.svgText = window.document.createElementNS(XMLNS, 'text')
+		this.svgText.setAttributeNS(null,'x','50')
+    this.svgText.setAttributeNS(null,'y','54')
+		this.svgText.setAttributeNS(null,'fill','currentColor')
+		this.svgText.setAttributeNS(null,'text-anchor','middle')
 
 		svg.appendChild(svgCircleBg)
 		svg.appendChild(this.svgCircle)
@@ -79,7 +79,7 @@ export default class TimerView extends ItemView {
 	}
 
 	showDateFilter(): void {
-		const { containerEl } = this;
+		const { containerEl } = this
 
 		const filterContainer = containerEl.createDiv({
 			cls: ['redmine-tracking-filter']
@@ -135,12 +135,12 @@ export default class TimerView extends ItemView {
   }
 
 	setCirclePercentage(percent: number): void {
-		const radius = this.svgCircle.r.baseVal.value;
-		const circumference = radius * 2 * Math.PI;
-		const offset = circumference - percent / 100 * circumference;
+		const radius = this.svgCircle.r.baseVal.value
+		const circumference = radius * 2 * Math.PI
+		const offset = circumference - percent / 100 * circumference
 
-		this.svgCircle.style.strokeDasharray = `${circumference} ${circumference}`;
-		this.svgCircle.style.strokeDashoffset = offset.toFixed(2);
+		this.svgCircle.style.strokeDasharray = `${circumference} ${circumference}`
+		this.svgCircle.style.strokeDashoffset = offset.toFixed(2)
 		this.svgCircle.style.strokeWidth = percent === 0 ? '0' : '4'
 	}
 
