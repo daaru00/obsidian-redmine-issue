@@ -1,7 +1,7 @@
 {
     "id": "obsidian-redmine-issue",
     "name": "Redmine Issue",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "minAppVersion": "0.11.13",
     "description": "This plugin show Redmine issue details from key or id",
     "author": "Fabio Gollinucci",
