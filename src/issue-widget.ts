@@ -21,8 +21,6 @@ export default class IssueWidget {
   }
 
   setIssueIdentifier(redmineIssueKey: string): IssueWidget {
-    this.el.dataset.identifier = redmineIssueKey
-
     this.el.empty()
     this.el.innerHTML = 'loading..'
 

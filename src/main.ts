@@ -9,6 +9,15 @@ import TrackingSaveModal from './tracking-save-modal'
 import { OnTimerSaveEvent } from './types'
 import TrackingView, { VIEW_TYPE_OUTPUT } from './tracking-view'
 
+const EVENT_BUS_NAME = 'redmine-event-bus'
+
+declare global {
+	interface Window {
+		redmineEventBus: Comment; 
+		timeTrackerEventBus: Comment; 
+	}
+}
+
 export default class RedmineIssuePlugin extends Plugin {
 	settings: RedmineIssuePluginSettings
 	redmineClient: RedmineClient
@@ -49,6 +58,9 @@ export default class RedmineIssuePlugin extends Plugin {
 	initRedmineClient(): void {
 		this.redmineClient = new RedmineClient(this.settings)
 		this.refreshData()
+
+		window.redmineEventBus = document.createComment(EVENT_BUS_NAME)
+		window.redmineEventBus.addEventListener('timersave', this.onSaveTimer.bind(this))
 	}
 
 	refreshData(): void {
@@ -90,8 +102,8 @@ export default class RedmineIssuePlugin extends Plugin {
 			const issueWidget = issueWidgetContainer.createDiv()
 			issueWidget.addClass('redmine-issue')
 			issueWidget.addClass('timer-tracker-compatible')
-
-			issueWidget.addEventListener('timersave', this.onSaveTimer.bind(this))
+			issueWidget.dataset.identifier = key
+			issueWidget.dataset.type = 'redmine'
 
 			new IssueWidget(this, issueWidget)
 				.setIssueIdentifier(key)
@@ -103,12 +115,10 @@ export default class RedmineIssuePlugin extends Plugin {
 	}
 
 	onTimerSaved(event: OnTimerSaveEvent): void {
-		const timerElement = window.document.querySelector('.timer-control-container[data-identifier="'+event.detail.id+'"]')
-		if (!timerElement) {
-			return
+		if (window.timeTrackerEventBus) {
+			window.timeTrackerEventBus.dispatchEvent(new CustomEvent('timersaved', event))
 		}
 
-		timerElement.dispatchEvent(new CustomEvent('timersaved', event))
 		this.refreshData()
 	}
 
@@ -120,5 +130,9 @@ export default class RedmineIssuePlugin extends Plugin {
 		await this.saveData(this.settings)
 
 		this.initRedmineClient()
+	}
+
+	onunload(): void {
+		delete window.redmineEventBus
 	}
 }
