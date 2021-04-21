@@ -32,7 +32,7 @@ Add this code block where you want to show the issue widget:
 
 or add multiple ids, one for each line, to show a grid of widgets:
 ````makrdown
-```jira
+```redmine
 12345
 12346
 12347
