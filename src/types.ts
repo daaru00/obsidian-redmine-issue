@@ -2,6 +2,7 @@ export interface OnTimerSaveEvent {
 	detail: {
 		id: string,
     duration: number,
-		startedAt: Date
+		startedAt: Date,
+		tags: string[]
 	}
 }
