@@ -14,6 +14,7 @@ export default class IssueWidget {
     this.plugin = plugin
     this.el = el
     this.el.addEventListener('refresh', this.loadIssue.bind(this))
+    this.el.addClass('loading')
   }
 
   getIssueIdentifier(): string {
@@ -37,6 +38,8 @@ export default class IssueWidget {
       this.el.innerHTML = error.toString()
       this.el.addClass('in-error')
       return
+    } finally {
+      this.el.removeClass('loading')
     }
     this.el.removeClass('in-error')
 
