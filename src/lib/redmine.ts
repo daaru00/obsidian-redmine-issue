@@ -49,9 +49,11 @@ export interface RedmineTimeEntryActivity {
 
 export default class RedmineClient {
   settings: RedmineIssuePluginSettings
+  queue: Promise<any>
 
   constructor(settings: RedmineIssuePluginSettings) {
     this.settings = settings
+    this.queue = Promise.resolve()
   }
 
   async callApi(method: string, path: string, data: any = {}): Promise<any> {
@@ -101,6 +103,10 @@ export default class RedmineClient {
     })    
   }
 
+  async queueApi(method: string, path: string, data: any = {}): Promise<any> {
+    return await this.queue.then(() => this.callApi(method, path, data))
+  }
+
   async getUser(): Promise<RedmineUser> {
     const res = await this.callApi('GET', join('users', 'current.json'))
     res.user = res.user || {}
@@ -116,7 +122,7 @@ export default class RedmineClient {
   }
 
   async getIssueDetails(issueId: string): Promise<RedmineIssue> {
-    const res = await this.callApi('GET', join('issues', issueId + '.json'))
+    const res = await this.queueApi('GET', join('issues', issueId + '.json'))
     res.issue = res.issue || {}
 
     return {
